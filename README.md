@@ -1,4 +1,4 @@
-## Trello API - MERN STACK PRO(process: 12%)
+## Trello API - MERN STACK PRO
 
 
 
