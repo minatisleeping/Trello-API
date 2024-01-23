@@ -21,18 +21,14 @@ const createNew = async (req, res, next) => {
   })
 
   try {
-    console.log('req.body: ', req.body) // vì method là POST nên sẽ nhận đc dữ liệu từ phía back-end thông qua req.body
     // set abortEarly: false để trường hợp có nhiều lỗi validation thì trả về tất cả lỗi
     await correctCondition.validateAsync(req.body, { abortEarly: false }) //json object 'abortEarly: false': gặp lỗi có dừng luôn hay không?
-    // next()
-    res.status(StatusCodes.CREATED).json({ message: 'POST from Validation: API created new board' })
+    next()
   } catch (error) {
     res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
       err_message: new Error(error).message
     })
   }
-
-
 }
 
 export const boardValidation = {
