@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-catch */
-import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatters'
 
 const createNew = async (reqBody) => {
