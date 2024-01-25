@@ -1,14 +1,8 @@
-/**
- * Updated by trungquandev.com's author on August 17 2023
- * YouTube: https://youtube.com/@trungquandev
- * "A bit of fragrance clings to the hand that gives flowers!"
- */
-
 const MONGODB_URI = 'mongodb+srv://minat:zHC9uv2a7YnbrReG@cluster0-minatisleeping.rhqmph5.mongodb.net/?retryWrites=true&w=majority'
 const DATABASE_NAME = 'trello-minat-mern-stack-pro'
 
 import { MongoClient, ServerApiVersion } from 'mongodb'
-import { env } from '~/config/environment'
+// import { env } from '~/config/environment'
 
 
 // Khởi tạo 1 đối tượng trelloDatabaseInstance ban đầu là null(vì chúng ta chưa connect)
