@@ -69,7 +69,7 @@ const getDetails = async (id) => {
       } }
     ]).toArray()
 
-    return result[0] || {} // lấy phần tử đầu tiên or 1 json object rỗng
+    return result[0] || null // lấy phần tử đầu tiên or 1 json object rỗng
   } catch (error) { throw new Error(error) }
 }
 
