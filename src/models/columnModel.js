@@ -19,6 +19,9 @@ const COLUMN_COLLECTION_SCHEMA = Joi.object({
   _destroy: Joi.boolean().default(false)
 })
 
+// Chỉ định ra những Fields mà chúng ta không  muốn cho phép cập nhật trong hàm update()
+const INVALID_UPDATE_FIELDS = ['_id', 'boardId', 'createdAt']
+
 const validateBeforeCreate = async (data) => {
   return await COLUMN_COLLECTION_SCHEMA.validateAsync(data, { abortEarly: false })
 }
@@ -57,10 +60,29 @@ const pushCardOrderIds = async (card) => {
   } catch (error) { throw new Error(error) }
 }
 
+// Nhiệm vụ của func này là push 1 giá trị columnId vào cuối mảng columnOrderIds
+const update = async (columnId, updateData) => {
+  try {
+    // Lọc những Fields mà mình không cho phép update linh tinh
+    Object.keys(updateData).forEach(fieldName => {
+      if (INVALID_UPDATE_FIELDS.includes(fieldName)) {
+        delete updateData[fieldName]
+      }
+    })
+    const result = await GET_DB().collection(COLUMN_COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(columnId) },
+      { $set: updateData },
+      { returnDocument: 'after' } // trả về kết quả sau khi update
+    )
+    return result
+  } catch (error) { throw new Error(error) }
+}
+
 export const columnModel = {
   COLUMN_COLLECTION_NAME,
   COLUMN_COLLECTION_SCHEMA,
   createNew,
   findOneById,
-  pushCardOrderIds
+  pushCardOrderIds,
+  update
 }
