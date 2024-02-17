@@ -60,7 +60,6 @@ const pushCardOrderIds = async (card) => {
   } catch (error) { throw new Error(error) }
 }
 
-// Nhiệm vụ của func này là push 1 giá trị columnId vào cuối mảng columnOrderIds
 const update = async (columnId, updateData) => {
   try {
     // Lọc những Fields mà mình không cho phép update linh tinh
@@ -69,6 +68,12 @@ const update = async (columnId, updateData) => {
         delete updateData[fieldName]
       }
     })
+
+    // Đối với những dữ liệu liên quan ObjectId, biến đổi ở đây
+    if (updateData.cardOrderIds) {
+      updateData.cardOrderIds = updateData.cardOrderIds.map(_id => (new ObjectId(_id)))
+    }
+
     const result = await GET_DB().collection(COLUMN_COLLECTION_NAME).findOneAndUpdate(
       { _id: new ObjectId(columnId) },
       { $set: updateData },
